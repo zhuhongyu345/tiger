@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "stocks")
+@Document(collection = "stock")
 @Accessors(chain = true)
 public class StockBasic {
 

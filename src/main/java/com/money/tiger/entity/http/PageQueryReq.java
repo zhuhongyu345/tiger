@@ -1,5 +1,8 @@
 package com.money.tiger.entity.http;
 
+import lombok.Data;
+
+@Data
 public class PageQueryReq {
     private String zclHigh;
     private String zclLow;
@@ -11,10 +14,9 @@ public class PageQueryReq {
     private String peLow;
     private String name;
     private String yield;
-    private String liangbi;
     private String tpe;
-    private String skip;
-    private String size;
+    private Long skip;
+    private Integer size;
     private String sort;
     private String sortType;
 
