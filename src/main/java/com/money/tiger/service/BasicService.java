@@ -43,7 +43,7 @@ public class BasicService {
 
 
         if (!StringUtils.isEmpty(req.getName())) {
-            query.addCriteria(Criteria.where("name").is(req.getName()));
+            query.addCriteria(Criteria.where("name").is(req.getName().toUpperCase()));
         }
         query.with(Sort.by(Sort.Direction.valueOf(req.getSortType().toUpperCase()), req.getSort()));
         query.skip(req.getSkip() == null ? 0 : req.getSkip()).limit(req.getSize());
@@ -52,10 +52,10 @@ public class BasicService {
 
     public String addOne(String name, Integer type) {
         StockBasic byName = basicRepository.findByName(name);
-        if (byName != null || type == null) {
+        if (byName != null || type == null || StringUtils.isEmpty(name)) {
             return "fail";
         }
-        basicRepository.save(new StockBasic().setName(name).setType(type).setTag(1));
+        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(1));
         return "success";
     }
 
