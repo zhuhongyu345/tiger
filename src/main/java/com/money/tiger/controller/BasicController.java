@@ -46,7 +46,7 @@ public class BasicController {
     }
 
     @GetMapping("history")
-    public Map<String, List<Object>> history(String name, String count, String period) {
+    public Map<String, Object> history(String name, Integer count, String period) {
         return historyService.getHistory(name.toUpperCase(), count, period);
     }
 
