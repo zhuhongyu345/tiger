@@ -3,6 +3,7 @@ package com.money.tiger.controller;
 import com.money.tiger.entity.StockBasic;
 import com.money.tiger.entity.http.PageQueryReq;
 import com.money.tiger.service.BasicService;
+import com.money.tiger.service.FlushService;
 import com.money.tiger.service.HistoryService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,35 +22,42 @@ public class BasicController {
     private BasicService basicService;
     @Resource
     private HistoryService historyService;
+    @Resource
+    private FlushService flushService;
 
     @GetMapping("ping")
     public String ping() {
         return "pong";
     }
 
-    @GetMapping("search")
+    @PostMapping("search")
     public List<StockBasic> search(PageQueryReq req) {
         return basicService.search(req);
     }
 
     @PostMapping("addOne")
-    public void addOne(String name, Integer type) {
-        basicService.addOne(name, type);
+    public String addOne(String name, Integer type) {
+        return basicService.addOne(name, type);
     }
 
     @PostMapping("tagOne")
-    public void tagOne(String id, Integer tag) {
-        basicService.tagOne(id, tag);
+    public String tagOne(String id, Integer tag) {
+        return basicService.tagOne(id, tag);
     }
 
     @PostMapping("deleteOne")
-    public void deleteOne(String id) {
-        basicService.deleteOne(id);
+    public String deleteOne(String id) {
+        return basicService.deleteOne(id);
     }
 
     @GetMapping("history")
     public Map<String, Object> history(String name, Integer count, String period) {
         return historyService.getHistory(name.toUpperCase(), count, period);
+    }
+
+    @PostMapping("flush")
+    public String flush(Integer hard, Integer type) {
+        return flushService.flush(hard, type);
     }
 
 }

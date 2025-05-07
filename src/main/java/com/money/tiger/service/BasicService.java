@@ -45,28 +45,32 @@ public class BasicService {
         if (!StringUtils.isEmpty(req.getName())) {
             query.addCriteria(Criteria.where("name").is(req.getName()));
         }
-        query.with(Sort.by(Sort.Direction.valueOf(req.getSortType().toUpperCase()),req.getSort()));
-        query.skip(req.getSkip()).limit(req.getSize());
+        query.with(Sort.by(Sort.Direction.valueOf(req.getSortType().toUpperCase()), req.getSort()));
+        query.skip(req.getSkip() == null ? 0 : req.getSkip()).limit(req.getSize());
         return mongoTemplate.find(query, StockBasic.class);
     }
 
-    public void addOne(String name, Integer type) {
+    public String addOne(String name, Integer type) {
         StockBasic byName = basicRepository.findByName(name);
         if (byName != null || type == null) {
-            return;
+            return "fail";
         }
         basicRepository.save(new StockBasic().setName(name).setType(type).setTag(1));
+        return "success";
     }
 
-    public void tagOne(String id, Integer tag) {
+    public String tagOne(String id, Integer tag) {
         Optional<StockBasic> byId = basicRepository.findById(id);
         if (byId.isPresent()) {
             StockBasic stockBasic = byId.get();
             basicRepository.save(stockBasic.setTag(tag));
+            return "success";
         }
+        return "missing";
     }
 
-    public void deleteOne(String id) {
+    public String deleteOne(String id) {
         basicRepository.deleteById(id);
+        return "success";
     }
 }

@@ -3,11 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="scripts/config.js"></script>
     <link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
     <link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
     <title>stock</title>
     <script type="text/javascript">
-        var hostC = 'http://82.156.244.4:80'
         $(document).ready(function () {
 
 
@@ -146,7 +146,7 @@
                 url: hostC + "/search",
                 data: req,
                 success: function (result) {
-                    res = JSON.parse(result)
+                    res = (result)
                     tableBody = '';
                     totc = 0
                     for (var i in res) {
@@ -172,24 +172,24 @@
                         linkwn2 = "https://www.webull.com.sg/ticker/nyse-" + d.Name
 
                         tableBody += '<tr>' +
-                            '<td><input type="checkbox" name="IDCheck" value="' + d.ID + '" class="acb"/></td>' +
-                            '<td>' + d.ID + '</td>' +
-                            '<td>' + d.Name + '</td>' +
-                            '<td>' + d.CHN + '</td>' +
+                            '<td><input type="checkbox" name="IDCheck" value="' + d.id + '" class="acb"/></td>' +
+<!--                            '<td>' + d.id + '</td>' +-->
+                            '<td>' + d.name + '</td>' +
+                            '<td>' + d.chn + '</td>' +
                             '<td>' + t + '</td>' +
-                            '<td>' + d.PE + '</td>' +
-                            '<td>' + d.Yield + '</td>' +
-                            // '<td>' + d.Sz + '</td>' +
-                            '<td>' + d.Price + '</td>' +
-                            // '<td>' + d.Hsl + '</td>' +
-                            // '<td>' + d.Lb + '</td>' +
-                            // '<td>' + d.L52 + '</td>' +
-                            // '<td>' + d.H52 + '</td>' +
-                            '<td>' + d.Hl + '</td>' +
-                            '<td>' + d.CjlD + '</td>' +
-                            '<td>' + d.ZCL + '</td>' +
-                            '<td>' + d.ZCW + '</td>' +
-                            '<td>' + d.Up + '</td>' +
+                            '<td>' + d.pe + '</td>' +
+                            '<td>' + d.yield + '</td>' +
+                            // '<td>' + d.shizhi + '</td>' +
+                            '<td>' + d.price + '</td>' +
+                            // '<td>' + d.huanshoulv + '</td>' +
+                            // '<td>' + d.liangbi + '</td>' +
+                            // '<td>' + d.l52 + '</td>' +
+                            // '<td>' + d.h52 + '</td>' +
+                            '<td>' + d.hl + '</td>' +
+                            '<td>' + d.cjlrateday + '</td>' +
+                            '<td>' + d.zcrate + '</td>' +
+                            '<td>' + d.zcweek + '</td>' +
+                            '<td>' + d.up + '</td>' +
                             '<td>' +
                             '<a target="_blank" href="' + linkHistory + '" class="edit">GO</a>' +
                             '</td>' +
@@ -294,7 +294,7 @@
                     <tr>
                         <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);"/>
                         </th>
-                        <th>ID</th>
+<!--                        <th>ID</th>-->
                         <th>CODE</th>
                         <th style="width:230px;">NAME</th>
                         <th style="width:83px;">TYPE</th>
