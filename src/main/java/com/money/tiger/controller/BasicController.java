@@ -4,6 +4,7 @@ import com.money.tiger.entity.StockBasic;
 import com.money.tiger.entity.http.PageQueryReq;
 import com.money.tiger.service.BasicService;
 import com.money.tiger.service.HistoryService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class BasicController {
 
     @Resource

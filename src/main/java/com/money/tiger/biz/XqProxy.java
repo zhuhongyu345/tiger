@@ -2,47 +2,32 @@ package com.money.tiger.biz;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.money.tiger.dao.ConfigRepository;
-import com.money.tiger.entity.SingleConfig;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Component
 @Slf4j
 public class XqProxy {
 
-    @PostConstruct
-    private void init() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                flushToken();
-            }
-        }, 0, 3600 * 1000L);
-    }
-
     private String token;
 
-    @Resource
-    private ConfigRepository configRepository;
-
-    private void flushToken() {
-        SingleConfig xueqiuToken = configRepository.findByKey("xueqiu_token");
-        if (xueqiuToken != null && xueqiuToken.getValue() != null) {
-            token = xueqiuToken.getValue();
-        }
+    public void flushToken(String token) {
+        this.token = token;
     }
 
     public List<XQKline> getKline(String name, String period, int count) {
+        if (token == null) {
+            return null;
+        }
         String url = String.format("https://stock.xueqiu.com/v5/stock/chart/kline.json?" +
                         "symbol=%s&begin=%s&period=%s&type=before&count=-%s" +
                         "&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance",
@@ -72,17 +57,16 @@ public class XqProxy {
                 k.setOpen(item.getFloat(2));
                 k.setHigh(item.getFloat(3));
                 k.setLow(item.getFloat(4));
-                k.setHigh(item.getFloat(5));
+                k.setClose(item.getFloat(5));
                 k.setChg(item.getFloat(6));
                 k.setPercent(item.getFloat(7));
                 k.setPe(item.getFloat(12));
                 k.setTime(sdf.format(new Date(k.getTimestamp())));
                 resp.add(k);
             }
-            return resp;
         } catch (Exception e) {
             log.error("", e);
         }
-        return null;
+        return resp;
     }
 }

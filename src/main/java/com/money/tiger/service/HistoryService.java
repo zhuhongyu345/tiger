@@ -22,7 +22,7 @@ public class HistoryService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (XQKline xqKline : kline) {
             times.add(sdf.format(new Date(xqKline.getTimestamp())));
-            pes.add(Math.round(xqKline.getPe() * 10000) / 10000.0);
+            pes.add(xqKline.getPe() == null ? null : Math.round(xqKline.getPe() * 10000) / 10000.0);
             prices.add(Math.round(xqKline.getClose() * 10000) / 10000.0);
         }
         Map<String, Object> resp = new HashMap<>();
