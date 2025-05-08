@@ -40,8 +40,23 @@ public class BasicService {
                     .lte(StringUtils.isEmpty(req.getHlHigh()) ? Float.MAX_VALUE : req.getHlHigh()));
         }
 
+        if (!StringUtils.isEmpty(req.getZclHigh()) || !StringUtils.isEmpty(req.getZclLow())) {
+            query.addCriteria(Criteria.where("zcrate")
+                    .gte(StringUtils.isEmpty(req.getZclLow()) ? Float.MIN_VALUE : req.getZclLow())
+                    .lte(StringUtils.isEmpty(req.getZclHigh()) ? Float.MAX_VALUE : req.getZclHigh()));
+        }
+
         if (!StringUtils.isEmpty(req.getYield())) {
             query.addCriteria(Criteria.where("yield").gte(req.getYield()));
+        }
+
+
+        if (req.getType() != null) {
+            if (req.getType() == -1) {
+                query.addCriteria(Criteria.where("tag").is(1));
+            } else {
+                query.addCriteria(Criteria.where("type").is(req.getType()));
+            }
         }
 
 
@@ -61,7 +76,7 @@ public class BasicService {
         if (StringUtils.isEmpty(mic)) {
             mic = nsdqProxy.getOne(name).getMicCode();
         }
-        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(1).setMic(mic));
+        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(0).setMic(mic));
         return "success";
     }
 

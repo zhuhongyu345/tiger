@@ -8,24 +8,8 @@ import java.util.HashMap;
 public class ImportUtil {
 
     public static void main(String[] args) throws Exception {
-        int i = 0;
-        while (true) {
-            i++;
-            int res = importSome(i, 10000, 1);
-            if (res == 0) {
-                break;
-            }
-        }
-
-        int j=0;
-        while (true){
-            j++;
-            int res = importSome(j, 10000, 2);
-            if (res == 0) {
-                break;
-            }
-        }
-
+        importSome(1, 10000, 1);
+        importSome(1, 10000, 2);
     }
 
     public static int importSome(int page, int size, int type) throws Exception {
@@ -59,7 +43,7 @@ public class ImportUtil {
             param.put("type", type);
             HttpUtil.call("http://127.0.0.1:9347/addOne", param, null, null, "POST");
         }
-        System.out.println("import page:"+page+",size:"+objects.size());
+        System.out.println("import page:" + page + ",size:" + objects.size());
         return objects.size();
     }
 

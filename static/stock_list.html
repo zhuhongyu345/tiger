@@ -61,6 +61,15 @@
             search()
         }
 
+        function selectOrClearAllCheckbox(){
+            const checkboxes = document.querySelectorAll('.acb');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !checkbox.checked;
+            });
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            document.getElementById('checkAll').checked = allChecked;
+        }
+
         function deleteOne() {
             $("input:checkbox").each(function () {
                 if ($(this).is(':checked')) {
@@ -292,7 +301,7 @@
             <div class="ui_tb">
                 <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
                     <tr>
-                        <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);"/>
+                        <th width="30"><input type="button" id="all" value="all" onclick="selectOrClearAllCheckbox();"/>
                         </th>
 <!--                        <th>ID</th>-->
                         <th>CODE</th>

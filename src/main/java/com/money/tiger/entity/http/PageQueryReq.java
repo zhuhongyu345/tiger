@@ -14,7 +14,7 @@ public class PageQueryReq {
     private Float peLow;
     private String name;
     private Float yield;
-    private Integer tpe;
+    private Integer type;
     private Long skip;
     private Integer size;
     private String sort;
