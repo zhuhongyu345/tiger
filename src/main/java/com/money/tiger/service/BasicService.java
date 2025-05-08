@@ -1,5 +1,6 @@
 package com.money.tiger.service;
 
+import com.money.tiger.biz.nsdq.NsdqProxy;
 import com.money.tiger.dao.StockBasicRepository;
 import com.money.tiger.entity.StockBasic;
 import com.money.tiger.entity.http.PageQueryReq;
@@ -22,6 +23,8 @@ public class BasicService {
     private StockBasicRepository basicRepository;
     @Resource
     private MongoTemplate mongoTemplate;
+    @Resource
+    private NsdqProxy nsdqProxy;
 
     //todo
     public List<StockBasic> search(PageQueryReq req) {
@@ -50,12 +53,15 @@ public class BasicService {
         return mongoTemplate.find(query, StockBasic.class);
     }
 
-    public String addOne(String name, Integer type) {
+    public String addOne(String name, Integer type, String mic) {
         StockBasic byName = basicRepository.findByName(name);
         if (byName != null || type == null || StringUtils.isEmpty(name)) {
             return "fail";
         }
-        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(1));
+        if (StringUtils.isEmpty(mic)) {
+            mic = nsdqProxy.getOne(name).getMicCode();
+        }
+        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(1).setMic(mic));
         return "success";
     }
 

@@ -1,7 +1,7 @@
 package com.money.tiger.service;
 
-import com.money.tiger.biz.XQKline;
-import com.money.tiger.biz.XqProxy;
+import com.money.tiger.biz.xq.XQKline;
+import com.money.tiger.biz.xq.XqProxy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

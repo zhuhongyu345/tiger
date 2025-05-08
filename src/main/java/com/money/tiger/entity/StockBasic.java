@@ -13,6 +13,7 @@ public class StockBasic {
     @Id
     private String id;
     private String name;
+    private String mic;
     private int type;
     private String chn;
     private Float yield;

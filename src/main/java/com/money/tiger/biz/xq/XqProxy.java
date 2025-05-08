@@ -1,7 +1,8 @@
-package com.money.tiger.biz;
+package com.money.tiger.biz.xq;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.money.tiger.biz.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ public class XqProxy {
         Map<String, String> headers = new HashMap<>();
         headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36");
         headers.put("Cookie", token);
-        String string = HttpUtil.call(url, null, headers, "GET");
+        String string = HttpUtil.call(url, null, null, headers, "GET");
         JSONObject root = JSONObject.parseObject(string);
 
         ArrayList<XQKline> resp = new ArrayList<>();
@@ -68,7 +69,7 @@ public class XqProxy {
         Map<String, String> headers = new HashMap<>();
         headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36");
         headers.put("Cookie", token);
-        String string = HttpUtil.call(url, null, headers, "GET");
+        String string = HttpUtil.call(url, null, null, headers, "GET");
         if (string == null) {
             return null;
         }

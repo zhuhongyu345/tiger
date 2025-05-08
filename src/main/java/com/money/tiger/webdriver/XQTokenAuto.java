@@ -1,6 +1,6 @@
 package com.money.tiger.webdriver;
 
-import com.money.tiger.biz.XqProxy;
+import com.money.tiger.biz.xq.XqProxy;
 import com.money.tiger.dao.ConfigRepository;
 import com.money.tiger.entity.SingleConfig;
 import org.openqa.selenium.By;

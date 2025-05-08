@@ -36,8 +36,8 @@ public class BasicController {
     }
 
     @PostMapping("addOne")
-    public String addOne(String name, Integer type) {
-        return basicService.addOne(name, type);
+    public String addOne(String name, Integer type, String mic) {
+        return basicService.addOne(name, type, mic);
     }
 
     @PostMapping("tagOne")

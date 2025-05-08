@@ -1,4 +1,4 @@
-package com.money.tiger.biz;
+package com.money.tiger.biz.xq;
 
 import lombok.Data;
 

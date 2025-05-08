@@ -3,6 +3,6 @@ app_logs/*
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+mongo-data/
 ### IntelliJ IDEA ###
 .idea

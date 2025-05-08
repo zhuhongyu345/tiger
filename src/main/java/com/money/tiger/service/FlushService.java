@@ -1,8 +1,8 @@
 package com.money.tiger.service;
 
-import com.money.tiger.biz.XQDetail;
-import com.money.tiger.biz.XQKline;
-import com.money.tiger.biz.XqProxy;
+import com.money.tiger.biz.xq.XQDetail;
+import com.money.tiger.biz.xq.XQKline;
+import com.money.tiger.biz.xq.XqProxy;
 import com.money.tiger.dao.StockBasicRepository;
 import com.money.tiger.entity.StockBasic;
 import lombok.extern.slf4j.Slf4j;
@@ -76,7 +76,7 @@ public class FlushService {
         basic.setH52(detail.getHigh52w());
         basic.setL52(detail.getLow52w());
         basic.setLiangbi(detail.getVolume_ratio());
-        basic.setShizhi(detail.getMarket_capital() / 100000000F);
+        basic.setShizhi(detail.getMarket_capital() == null ? null : detail.getMarket_capital() / 100000000F);
         basic.setHuanshoulv(detail.getTurnover_rate());
         if (basic.getH52() - basic.getL52() == 0) {
             basic.setHl(1F);
@@ -97,8 +97,8 @@ public class FlushService {
                 vtot += xqKline.getVolume();
             }
             double vavg = vtot / (double) klineD.size();
-            float vcurrent = klineD.get(klineD.size()-1).getVolume();
-            basic.setCjlrateday((float) (vcurrent/vavg));
+            float vcurrent = klineD.get(klineD.size() - 1).getVolume();
+            basic.setCjlrateday((float) (vcurrent / vavg));
         }
         Float zcd = ZhiChengUtil.getZhiCheng(klineD, 0.009F);
         basic.setZcrate(zcd);
