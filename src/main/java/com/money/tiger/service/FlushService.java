@@ -35,9 +35,9 @@ public class FlushService {
                 Criteria criteria = new Criteria();
                 if (type != null) {
                     if (type > 0) {
-                        criteria.and("tag").is(1);
-                    } else {
                         criteria.and("type").is(type);
+                    } else {
+                        criteria.and("tag").is(1);
                     }
                 }
                 if (hard == null || hard == 0) {
@@ -84,18 +84,28 @@ public class FlushService {
             float hl = (basic.getPrice() - basic.getL52()) / (basic.getH52() - basic.getL52());
             basic.setHl((float) (Math.round(hl * 10000) / 10000.0));
         }
-        //
         List<XQKline> klineD = xqProxy.getKline(basic.getName(), "day", 69);
+        double vtot = 0;
         if (!klineD.isEmpty()) {
-            long ts = klineD.get(klineD.size() - 1).getTimestamp() / 1000;
+            long ts = klineD.get(klineD.size() - 1).getTimestamp();
             if (System.currentTimeMillis() - ts > 86400 * 30 * 1000L && ts > 0) {
                 basicRepository.deleteById(basic.getId());
                 log.info("delete one stock:{}", basic.getName());
                 return null;
             }
+            for (XQKline xqKline : klineD) {
+                vtot += xqKline.getVolume();
+            }
+            double vavg = vtot / (double) klineD.size();
+            float vcurrent = klineD.get(klineD.size()-1).getVolume();
+            basic.setCjlrateday((float) (vcurrent/vavg));
         }
-
-
+        Float zcd = ZhiChengUtil.getZhiCheng(klineD, 0.009F);
+        basic.setZcrate(zcd);
+        List<XQKline> klineW = xqProxy.getKline(basic.getName(), "week", 159);
+        Float zcw = ZhiChengUtil.getZhiCheng(klineW, 0.009F);
+        basic.setZcweek(zcw);
+        basic.setUp(LocalDate.now().toString());
         basicRepository.save(basic);
         return null;
     }

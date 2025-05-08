@@ -43,7 +43,7 @@ public class BasicService {
 
 
         if (!StringUtils.isEmpty(req.getName())) {
-            query.addCriteria(Criteria.where("name").is(req.getName().toUpperCase()));
+            query = new Query().addCriteria(Criteria.where("name").is(req.getName().toUpperCase()));
         }
         query.with(Sort.by(Sort.Direction.valueOf(req.getSortType().toUpperCase()), req.getSort()));
         query.skip(req.getSkip() == null ? 0 : req.getSkip()).limit(req.getSize());
