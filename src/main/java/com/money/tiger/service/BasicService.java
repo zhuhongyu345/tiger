@@ -31,7 +31,7 @@ public class BasicService {
         Query query = new Query();
         if (!StringUtils.isEmpty(req.getPeLow()) || !StringUtils.isEmpty(req.getPeHigh())) {
             query.addCriteria(Criteria.where("pe")
-                    .gt(StringUtils.isEmpty(req.getPeLow()) ? Float.MIN_VALUE : req.getPeLow())
+                    .gte(StringUtils.isEmpty(req.getPeLow()) ? Float.MIN_VALUE : req.getPeLow())
                     .lt(StringUtils.isEmpty(req.getPeHigh()) ? Float.MAX_VALUE : req.getPeHigh()));
         }
         if (!StringUtils.isEmpty(req.getHlHigh()) || !StringUtils.isEmpty(req.getHlLow())) {
@@ -76,7 +76,7 @@ public class BasicService {
         if (StringUtils.isEmpty(mic)) {
             mic = nsdqProxy.getOne(name).getMicCode();
         }
-        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setTag(0).setMic(mic));
+        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setPe(0F).setMic(mic));
         return "success";
     }
 
