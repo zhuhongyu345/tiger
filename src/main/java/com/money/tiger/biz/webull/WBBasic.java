@@ -1,0 +1,66 @@
+package com.money.tiger.biz.webull;
+
+import lombok.Data;
+
+@Data
+public class WBBasic {
+    private int tickerId;
+    private int exchangeId;
+    private int type;
+    private int regionId;
+    private String regionCode;
+    private int currencyId;
+    private String name;
+    private String symbol;
+    private String disSymbol;
+    private String disExchangeCode;
+    private String exchangeCode;
+    private int listStatus;
+    private String template;
+    private int derivativeSupport;
+    private String tradeTime;
+    private String status;
+    private String close;
+    private String change;
+    private String changeRatio;
+    private String pPrice;
+    private String pChange;
+    private String pChRatio;
+    private String marketValue;
+    private String volume;
+    private String turnoverRate;
+    private String timeZone;
+    private String tzName;
+    private String preClose;
+    private String open;
+    private String high;
+    private String low;
+    private String vibrateRatio;
+    private String avgVol10D;
+    private String avgVol3M;
+    private String negMarketValue;
+    private String pe;
+    private String forwardPe;
+    private String indicatedPe;
+    private String peTtm;
+    private String eps;
+    private String epsTtm;
+    private String pb;
+    private String totalShares;
+    private String outstandingShares;
+    private String fiftyTwoWkHigh;
+    private String fiftyTwoWkLow;
+    private String dividend;
+    private String yield;
+    private int baSize;
+    private int ntvSize;
+    private String currencyCode;
+    private String lotSize;
+    private String latestDividendDate;
+    private String latestEarningsDate;
+    private String ps;
+    private String bps;
+    private String estimateEarningsDate;
+    private String tradeStatus;
+    private String nextEarningDay;
+}

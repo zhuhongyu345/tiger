@@ -52,16 +52,6 @@ public class EmbeddedMongoConfig {
                             .transitions(version);
                     TransitionWalker.ReachedState<RunningMongodProcess> executable = transitions.walker()
                             .initState(StateID.of(RunningMongodProcess.class));
-
-
-                    //old
-//                    IMongodConfig config = new MongodConfigBuilder()
-//                            .version(Version.Main.V4_0)
-//                            .net(new Net("localhost", port == null ? 27018 : port, Network.localhostIsIPv6()))
-//                            .replication(new Storage("mongo-data", null, 0))
-//                            .build();
-//                    MongodExecutable executable = MongodStarter.getDefaultInstance().prepare(config);
-//                    executable.start();
                     beanFactory.registerSingleton("embeddedMongoServer", executable);
                 } catch (Exception e) {
                     throw new BeanCreationException("Failed to start embedded MongoDB", e);

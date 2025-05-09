@@ -24,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class XQTokenAuto {
 
+    @Value("${chromedriver.headless}")
+    private boolean headless;
     @Value("${chromedriver.path}")
     private String path;
     @Resource
@@ -47,7 +49,9 @@ public class XQTokenAuto {
         System.setProperty("webdriver.chrome.driver", path);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized"); // 最大化窗口
-//        options.addArguments("--headless"); // 无头模式
+        if (headless) {
+            options.addArguments("--headless"); // 无头模式
+        }
         options.addArguments("--disable-gpu"); // 禁用GPU加速
         options.addArguments("--remote-allow-origins=*"); // 允许远程
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
