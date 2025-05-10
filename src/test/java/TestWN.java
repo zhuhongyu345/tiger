@@ -1,9 +1,9 @@
 import com.alibaba.fastjson.JSONArray;
 import com.money.tiger.biz.nsdq.NsdqOne;
-import com.money.tiger.biz.webull.WebullProxy;
+import com.money.tiger.biz.webull.WBProxy;
 import okhttp3.*;
 
-public class TestFlush {
+public class TestWN {
 
     public static void main(String[] args) throws Exception {
         importSome(2, 600, 1);
@@ -31,7 +31,7 @@ public class TestFlush {
                 .build();
         Response response = client.newCall(request).execute();
         JSONArray objects = JSONArray.parseArray(response.body().string());
-        WebullProxy proxy = new WebullProxy();
+        WBProxy proxy = new WBProxy();
         for (int i = 0; i < objects.size(); i++) {
             NsdqOne object = objects.getObject(i, NsdqOne.class);
             String micCode = object.getMicCode();

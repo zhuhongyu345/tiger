@@ -1,0 +1,27 @@
+interface：
+
+all：
+curl --location --request POST 'https://www.nyse.com/api/quotes/filter' --header 'Content-Type: application/json' --data-raw '{"sortColumn":"NORMALIZED_TICKER","pageNumber":1,"maxResultsPerPage":100,"sortOrder":"ASC"}'
+原网站：
+https://www.nyse.com/listings_directory/stock
+
+
+option chain：
+etf：
+https://api.nasdaq.com/api/quote/SPY/option-chain?assetclass=etf&limit=60&fromdate=2022-04-18&todate=2022-04-29&excode=oprac&callput=callput&money=at&type=week
+stock：
+https://api.nasdaq.com/api/quote/TSLA/option-chain?assetclass=stocks&limit=60&fromdate=2022-04-22&todate=2022-04-29&excode=oprac&callput=callput&money=at&type=all
+https://api.nasdaq.com/api/quote/TSLA/option-chain?assetclass=stocks&limit=60&offset=60&fromdate=2022-04-22&todate=2022-04-29&excode=oprac&callput=callput&money=at&type=all
+原网址：
+https://www.nasdaq.com/market-activity/stocks/tsla/option-chain
+
+微牛美股：
+https://www.webull.hk/quote/nasdaq-msft
+其中有个下次财报日比较特别，另外几个pe也很有意义。
+request接口是https://quotes-gw.webullfintech.com/api/quotes/ticker/getRealTimeBySymbol?exchangeCode=NASDAQ&symbol=MSFT
+
+富途个股
+https://www.futunn.com/stock/AAPL-US
+
+
+go build -o main.exe main.go

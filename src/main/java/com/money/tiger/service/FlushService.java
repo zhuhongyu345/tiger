@@ -1,5 +1,6 @@
 package com.money.tiger.service;
 
+import com.money.tiger.biz.webull.WBProxy;
 import com.money.tiger.biz.xq.XQDetail;
 import com.money.tiger.biz.xq.XQKline;
 import com.money.tiger.biz.xq.XqProxy;
@@ -27,6 +28,8 @@ public class FlushService {
     private StockBasicRepository basicRepository;
     @Resource
     private XqProxy xqProxy;
+    @Resource
+    private WBProxy wbProxy;
 
     public String flush(Integer hard, Integer type) {
         if (!doing || type == -1) {
@@ -105,6 +108,13 @@ public class FlushService {
         List<XQKline> klineW = xqProxy.getKline(basic.getName(), "week", 159);
         Float zcw = ZhiChengUtil.getZhiCheng(klineW, 0.009F);
         basic.setZcweek(zcw);
+        Float pef = wbProxy.getPEF(basic.getName(), basic.getMic());
+        if (pef != null) {
+            basic.setPef(pef);
+        } else {
+            basic.setPef(1000F);
+        }
+        basic.setPeg(basic.getPe() / basic.getPef());
         basic.setUp(LocalDate.now().toString());
         basicRepository.save(basic);
         return null;

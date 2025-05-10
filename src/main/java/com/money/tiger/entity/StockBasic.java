@@ -18,6 +18,8 @@ public class StockBasic {
     private String chn;
     private Float yield;
     private Float pe;
+    private Float pef;
+    private Float peg;
     private Float price;
     private Float h52;
     private Float l52;

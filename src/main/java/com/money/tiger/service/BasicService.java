@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class BasicService {
 
-
     @Resource
     private StockBasicRepository basicRepository;
     @Resource
@@ -74,7 +73,10 @@ public class BasicService {
             return "fail";
         }
         if (StringUtils.isEmpty(mic)) {
-            mic = nsdqProxy.getOne(name).getMicCode();
+            try {
+                mic = nsdqProxy.getOne(name).getMicCode();
+            } catch (Exception ignored) {
+            }
         }
         basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setPe(0F).setMic(mic));
         return "success";

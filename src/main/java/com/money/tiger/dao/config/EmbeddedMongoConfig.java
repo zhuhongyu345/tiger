@@ -54,7 +54,8 @@ public class EmbeddedMongoConfig {
                             .initState(StateID.of(RunningMongodProcess.class));
                     beanFactory.registerSingleton("embeddedMongoServer", executable);
                 } catch (Exception e) {
-                    throw new BeanCreationException("Failed to start embedded MongoDB", e);
+                    System.out.println("Failed to start embedded MongoDB");
+                    e.printStackTrace();
                 }
             }
         };

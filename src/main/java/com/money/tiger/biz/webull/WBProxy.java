@@ -1,17 +1,19 @@
 package com.money.tiger.biz.webull;
 
+import com.alibaba.fastjson.JSONObject;
 import com.money.tiger.biz.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 @Slf4j
-public class WebullProxy {
+public class WBProxy {
 
-
+    //otcpk-tcehy
     public String getBasic(String code, String mic) {
         //https://quotes-gw.webullfintech.com/api/quotes/ticker/getRealTimeBySymbol?exchangeCode=NYSE&symbol=AACT-U
         //https://quotes-gw.webullfintech.com/api/quotes/ticker/getRealTimeBySymbol?exchangeCode=NASDAQ&symbol=AAL
@@ -35,14 +37,22 @@ public class WebullProxy {
             case "ARCX":
                 ex = "NYSEARCA";
                 break;
-           case "BATS":
+            case "BATS":
                 ex = "BATS";
+                break;
+            case "OTCPK":
+                ex = "OTCPK";
                 break;
             default:
                 throw new RuntimeException(mic + "-" + code);
         }
 
         String url = "https://quotes-gw.webullfintech.com/api/quotes/ticker/getRealTimeBySymbol?exchangeCode=" + ex + "&symbol=" + code;
+        Map<String, String> headers = getStringStringMap();
+        return HttpUtil.call(url, null, null, headers, "GET");
+    }
+
+    private static Map<String, String> getStringStringMap() {
         Map<String, String> headers = new HashMap<>();
         headers.put("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
         headers.put("accept-language", "zh-CN,zh;q=0.9");
@@ -57,12 +67,22 @@ public class WebullProxy {
         headers.put("sec-fetch-user", "?1");
         headers.put("upgrade-insecure-requests", "1");
         headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36");
-        return HttpUtil.call(url, null, null, headers, "GET");
+        return headers;
     }
 
+    public Float getPEF(String code, String mic) {
+        try {
+            String basic = getBasic(code, mic);
+            WBBasic wbBasic = JSONObject.parseObject(basic, WBBasic.class);
+            return Float.parseFloat(wbBasic.getForwardPe());
+        } catch (Exception e) {
+            log.error("", e);
+            return 10000F;
+        }
+    }
 
     public static void main(String[] args) {
 
-        new WebullProxy().getBasic(null, null);
+        new WBProxy().getBasic(null, null);
     }
 }
