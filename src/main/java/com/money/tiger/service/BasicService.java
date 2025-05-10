@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +79,7 @@ public class BasicService {
             } catch (Exception ignored) {
             }
         }
-        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setPe(0F).setMic(mic));
+        basicRepository.save(new StockBasic().setName(name.toUpperCase()).setType(type).setPe(new BigDecimal("0F")).setMic(mic));
         return "success";
     }
 

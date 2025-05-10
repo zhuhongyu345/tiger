@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.money.tiger.biz.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,19 +70,19 @@ public class WBProxy {
         return headers;
     }
 
-    public Float getPEF(String code, String mic) {
+    public BigDecimal getPEF(String code, String mic) {
         try {
             String basic = getBasic(code, mic);
             WBBasic wbBasic = JSONObject.parseObject(basic, WBBasic.class);
-            return Float.parseFloat(wbBasic.getForwardPe());
+            return wbBasic.getForwardPe() == null ? new BigDecimal("10000") : new BigDecimal(wbBasic.getForwardPe());
         } catch (Exception e) {
-            log.error("", e);
-            return 10000F;
+            log.error("{}-{}:{}", code, mic, e.getMessage());
+            return new BigDecimal("10000");
         }
     }
 
     public static void main(String[] args) {
 
-        new WBProxy().getBasic(null, null);
+        new WBProxy().getPEF("ABLV", "XNCM");
     }
 }
